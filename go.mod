@@ -1,4 +1,4 @@
-module go-redis-template
+module github.com/PtheF/go-redis-template
 
 go 1.16
 
