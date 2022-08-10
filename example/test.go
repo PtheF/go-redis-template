@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"go-redis-template/template"
+	"github.com/PtheF/go-redis-template/template"
 )
 
 func main() {

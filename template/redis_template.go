@@ -2,8 +2,8 @@ package template
 
 import (
 	"errors"
+	"github.com/PtheF/go-redis-template/template/ops"
 	redigo "github.com/gomodule/redigo/redis"
-	"go-redis-template/template/ops"
 )
 
 var redTpl *RedTemp
