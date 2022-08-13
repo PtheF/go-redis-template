@@ -54,9 +54,11 @@ func (ops *ValueOps) IncrBy(key string, incr int) (v int, err error) {
 	return redigo.Int(conn.Do("INCRBY", key, incr))
 }
 
-func (ops *ValueOps) SetEx(key string, value string, exp int64) (bool, error) {
+func (ops *ValueOps) SetEx(key string, value string, exp int64) error {
 	conn := ops.conn()
 	defer conn.Close()
 
-	return redigo.Bool(conn.Do(SET, key, value, "ex", exp))
+	_, err := conn.Do(SET, key, value, "ex", exp)
+
+	return err
 }
