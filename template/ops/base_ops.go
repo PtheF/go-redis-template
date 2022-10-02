@@ -8,6 +8,6 @@ type Ops struct {
 	Pool *redigo.Pool
 }
 
-func (ops *Ops) conn() redigo.Conn {
+func (ops *Ops) Conn() redigo.Conn {
 	return ops.Pool.Get()
 }

@@ -16,6 +16,8 @@ type RedTemp struct {
 	valueOps *ops.ValueOps
 
 	listOps *ops.ListOps
+
+	//scriptOps *script.RedScriptOps
 }
 
 type RedTempBuilder struct {
@@ -98,4 +100,31 @@ func OpsForKey() *ops.KeyOps {
 
 func OpsForList() *ops.ListOps {
 	return redTpl.listOps
+}
+
+func Conn() redigo.Conn {
+	return redTpl.pool.Get()
+}
+
+func Execute(redisScript string, keys []interface{}, args []interface{}) (interface{}, error) {
+	conn := redTpl.pool.Get()
+	lua := redigo.NewScript(len(keys), redisScript)
+
+	keyLen := len(keys)
+	argLen := len(args)
+
+	r := make([]interface{}, keyLen+argLen)
+
+	for i := 0; i < keyLen; i++ {
+		r[i] = keys[i]
+	}
+
+	for i := 0; i < argLen; i++ {
+		r[i+keyLen] = args[i]
+	}
+
+	return lua.Do(conn, r...)
+	//exe, err := lua.Do(conn, r...)
+
+	//return string(exe[:]), err
 }

@@ -9,7 +9,7 @@ type KeyOps struct {
 }
 
 func (ops *KeyOps) Expire(key string, expiredSec int64) error {
-	conn := ops.conn()
+	conn := ops.Conn()
 	defer conn.Close()
 
 	_, err := conn.Do("EXPIRE", key, expiredSec)
@@ -17,7 +17,7 @@ func (ops *KeyOps) Expire(key string, expiredSec int64) error {
 }
 
 func (ops *KeyOps) Delete(keys ...interface{}) (bool, error) {
-	conn := ops.conn()
+	conn := ops.Conn()
 	defer conn.Close()
 
 	v, err := redigo.Bool(conn.Do("DEL", keys...))
@@ -25,7 +25,7 @@ func (ops *KeyOps) Delete(keys ...interface{}) (bool, error) {
 }
 
 func (ops *KeyOps) Exist(key string) (v bool, err error) {
-	conn := ops.conn()
+	conn := ops.Conn()
 	defer conn.Close()
 
 	return redigo.Bool(conn.Do("EXISTS", key))
