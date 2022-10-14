@@ -17,6 +17,10 @@ type RedTemp struct {
 
 	listOps *ops.ListOps
 
+	setOps *ops.SetOps
+
+	hashOps *ops.HashOps
+
 	//scriptOps *script.RedScriptOps
 }
 
@@ -85,6 +89,12 @@ func (r *RedTempBuilder) Build() error {
 	template.listOps = &ops.ListOps{}
 	template.listOps.Pool = template.pool
 
+	template.setOps = &ops.SetOps{}
+	template.setOps.Pool = template.pool
+
+	template.hashOps = &ops.HashOps{}
+	template.hashOps.Pool = template.pool
+
 	redTpl = template
 
 	return nil
@@ -100,6 +110,14 @@ func OpsForKey() *ops.KeyOps {
 
 func OpsForList() *ops.ListOps {
 	return redTpl.listOps
+}
+
+func OpsForSet() *ops.SetOps {
+	return redTpl.setOps
+}
+
+func OpsForHash() *ops.HashOps {
+	return redTpl.hashOps
 }
 
 func Conn() redigo.Conn {
